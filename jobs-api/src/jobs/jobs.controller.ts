@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
-import { identity } from 'rxjs';
 import { jobDto } from './dto/jobs.dto';
 import { Job } from './interfaces/jobs.interface';
 import { JobsService } from './jobs.service';
@@ -7,9 +6,12 @@ import { JobsService } from './jobs.service';
 @Controller('jobs')
 export class JobsController {
     constructor(private readonly jobsService : JobsService){}
-    @Get(':id')
-    find(@Param('id')id): Promise<Job>{
-        return this.jobsService.find(id);
+    @Get()
+    async find(@Res() res){
+        const job = await this.jobsService.findAll();
+        return res.status(HttpStatus.OK).json({
+            response:job
+        });
     }
 
     @Post()
@@ -21,12 +23,18 @@ export class JobsController {
     }
 
     @Put(':id')
-    update(@Param('id')id,@Body()job:jobDto):Promise<Job>{
-        return this.jobsService.update(id,job);
+    async update(@Param('id') id: string ,@Body() jobdto:jobDto){
+        return await this.jobsService.update(id,jobdto);
+        // return res.status(HttpStatus.OK).json({
+        //     response:job
+        // });
     }
 
     @Delete(':id')
-    delete(@Param('id')id):Promise<Job>{
-        return this.jobsService.delete(id);
+    async delete(@Res() res,@Param('id') id: string ,@Body() job:jobDto){
+         await this.jobsService.delete(id,job);
+            return res.status(HttpStatus.OK).json({
+            response:"Deleted"
+        });
     }
 }

@@ -8,19 +8,18 @@ import { Job } from './interfaces/jobs.interface';
 export class JobsService {
     constructor(@InjectModel('Job') private readonly jobModel : Model<Job>){}
 
-    async find(id:string): Promise<Job>{
-        return await this.jobModel.findOne({_id:id})
+    async findAll(){
+        return await this.jobModel.find();
     }
 
     async create(jobdto:jobDto){
-        return new this.jobModel(jobdto).save();
-        
+        return new this.jobModel(jobdto).save();   
     }
 
-    async update(id:string,job:Job):Promise<Job>{
-        return await this.jobModel.findByIdAndDelete(id , job);
+    async update(id:string,job:jobDto){
+        return await this.jobModel.findByIdAndUpdate(id , job , {new : true});
     }
-   async delete(id:string): Promise<Job>{
-       return await this.jobModel.findByIdAndRemove(id);
+   async delete(id:string,job:jobDto){
+       return await this.jobModel.findByIdAndDelete(id,job);
    }
 }
