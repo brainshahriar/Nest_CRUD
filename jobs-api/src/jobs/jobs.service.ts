@@ -11,6 +11,9 @@ export class JobsService {
     async findAll(){
         return await this.jobModel.find();
     }
+    async findbyID(id:string){
+        return await this.jobModel.findById(id);
+    }
 
     async create(jobdto:jobDto){
         return new this.jobModel(jobdto).save();   
@@ -19,7 +22,7 @@ export class JobsService {
     async update(id:string,job:jobDto){
         return await this.jobModel.findByIdAndUpdate(id , job , {new : true});
     }
-   async delete(id:string,job:jobDto){
-       return await this.jobModel.findByIdAndDelete(id,job);
+   async delete(id:string){
+       return await this.jobModel.findByIdAndDelete(id);
    }
 }

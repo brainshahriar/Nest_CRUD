@@ -14,6 +14,14 @@ export class JobsController {
         });
     }
 
+    @Get(':id')
+    async findbyID(@Res() res,@Param('id') id: string ){
+        const job = await this.jobsService.findbyID(id);
+        return res.status(HttpStatus.OK).json({
+            response:job
+        });
+    }
+
     @Post()
     async create(@Res() res ,@Body() jobdto:jobDto){
         const job = await this.jobsService.create(jobdto);
@@ -23,16 +31,16 @@ export class JobsController {
     }
 
     @Put(':id')
-    async update(@Param('id') id: string ,@Body() jobdto:jobDto){
-        return await this.jobsService.update(id,jobdto);
-        // return res.status(HttpStatus.OK).json({
-        //     response:job
-        // });
+    async update(@Res() res,@Param('id') id: string ,@Body() jobdto:jobDto){
+        await this.jobsService.update(id,jobdto);
+        return res.status(HttpStatus.OK).json({
+            response:"updated"
+        });
     }
 
     @Delete(':id')
-    async delete(@Res() res,@Param('id') id: string ,@Body() job:jobDto){
-         await this.jobsService.delete(id,job);
+    async delete(@Res() res,@Param('id') id: string){
+         await this.jobsService.delete(id);
             return res.status(HttpStatus.OK).json({
             response:"Deleted"
         });
