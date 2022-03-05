@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { jobDto } from './dto/jobs.dto';
-import { Job } from './interfaces/jobs.interface';
 import { JobsService } from './jobs.service';
 
 @Controller('jobs')
