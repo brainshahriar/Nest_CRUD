@@ -13,7 +13,7 @@ export class ProdService {
         const newProd = new this.prodModel(prod)
         return await newProd.save()
     }
-    //readProd
+    //read Prod
     async readProd(){
         return await this.prodModel.find()
     }
@@ -25,7 +25,7 @@ export class ProdService {
     async deleteProd(id:string){
         return await this.prodModel.findByIdAndDelete(id);
     }
-    //finby id
+    //find By Id
     async findByID(id:string){
         return await this.prodModel.findById(id)
     }
